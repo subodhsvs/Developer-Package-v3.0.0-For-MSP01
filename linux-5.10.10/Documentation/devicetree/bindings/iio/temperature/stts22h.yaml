@@ -1,0 +1,40 @@
+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+%YAML 1.2
+---
+$id: http://devicetree.org/schemas/iio/temperature/stts22h.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: STM Temperature Mems sensors
+
+maintainers:
+  - Mario Tesi <mario.tesi@st.com>
+
+description:
+  Device have I2C interface.
+
+properties:
+  compatible:
+      - st,stts22h
+
+  reg:
+    maxItems: 1
+
+additionalProperties: false
+
+required:
+  - compatible
+  - reg
+
+examples:
+  - |
+    #include <dt-bindings/interrupt-controller/irq.h>
+    i2c {
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        mag40@18 {
+            compatible = "st,stts22h";
+            reg = <0x38>;
+        };
+    };
+...

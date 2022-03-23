@@ -1,0 +1,31 @@
+In order to integrate st_ism330dhcx driver to your iio linux driver:
+        1) copy st_ism330dhcx source file to your kernel drivers/iio/imu/st_ism330dhcx/
+           folder
+
+        2) Update the drivers/iio/imu/Kconfig file with the following patch
+
+diff --git a/drivers/iio/imu/Kconfig b/drivers/iio/imu/Kconfig
+--- a/drivers/iio/imu/Kconfig
++++ b/drivers/iio/imu/Kconfig
+@@ -55,6 +55,7 @@ source "drivers/iio/imu/inv_mpu6050/Kconfig"
+ source "drivers/iio/imu/st_lsm6dsx/Kconfig"
+ source "drivers/iio/imu/st_lsm6dsox/Kconfig"
+ source "drivers/iio/imu/st_lsm6dsrx/Kconfig"
++source "drivers/iio/imu/st_ism330dhcx/Kconfig"
++
+
+        3) Update the drivers/iio/imu/Makefile file with the following patch
+
+diff --git a/drivers/iio/imu/Makefile b/drivers/iio/imu/Makefile
+--- a/drivers/iio/imu/Makefile
++++ b/drivers/iio/imu/Makefile
+@@ -21,3 +21,5 @@ obj-$(CONFIG_KMX61) += kmx61.o
+ obj-y += st_lsm6dsx/
+ obj-y += st_lsm6dsox/
+ obj-y += st_lsm6dsrx/
++obj-y += st_ism330dhcx/
++
+
+        4) Updated the device tree dts file
+
+

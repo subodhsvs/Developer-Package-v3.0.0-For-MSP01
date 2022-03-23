@@ -1,0 +1,34 @@
+--- drivers/tty/serial/serial_mctrl_gpio.h
++++ drivers/tty/serial/serial_mctrl_gpio.h
+@@ -91,6 +91,16 @@ void mctrl_gpio_enable_ms(struct mctrl_gpios *gpios);
+  */
+ void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios);
+ 
++/*
++ * Enable gpio wakeup interrupts to enable wake up source.
++ */
++void mctrl_gpio_enable_irq_wake(struct mctrl_gpios *gpios);
++
++/*
++ * Disable gpio wakeup interrupts to enable wake up source.
++ */
++void mctrl_gpio_disable_irq_wake(struct mctrl_gpios *gpios);
++
+ #else /* GPIOLIB */
+ 
+ static inline
+@@ -142,6 +152,14 @@ static inline void mctrl_gpio_disable_ms(struct mctrl_gpios *gpios)
+ {
+ }
+ 
++static inline void mctrl_gpio_enable_irq_wake(struct mctrl_gpios *gpios)
++{
++}
++
++static inline void mctrl_gpio_disable_irq_wake(struct mctrl_gpios *gpios)
++{
++}
++
+ #endif /* GPIOLIB */
+ 
+ #endif

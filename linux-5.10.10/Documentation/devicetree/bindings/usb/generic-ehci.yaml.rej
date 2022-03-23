@@ -1,0 +1,14 @@
+--- Documentation/devicetree/bindings/usb/generic-ehci.yaml
++++ Documentation/devicetree/bindings/usb/generic-ehci.yaml
+@@ -91,6 +91,11 @@ properties:
+   iommus:
+     maxItems: 1
+ 
++  wakeup-source:
++    $ref: /schemas/types.yaml#/definitions/flag
++    description:
++      Indicate this device has wakeup capabilities.
++
+ required:
+   - compatible
+   - reg

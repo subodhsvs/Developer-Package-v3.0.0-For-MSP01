@@ -1,0 +1,52 @@
+In order to integrate LPS22HH driver to your iio linux driver:
+	1) copy lps22hh source file to your kernel drivers/iio/pressure/
+	   folder
+
+	2) Update the drivers/iio/pressure/Kconfig file with the following patch
+
+diff --git a/drivers/iio/pressure/Kconfig b/drivers/iio/pressure/Kconfig
+--- a/drivers/iio/pressure/Kconfig
++++ b/drivers/iio/pressure/Kconfig
+@@ -239,4 +239,23 @@ config ZPA2326_SPI
+	tristate
+	select REGMAP_SPI
+
++config ST_LPS22HH_IIO
++	tristate "STMicroelectronics LPS22HH/LPS27HHW sensor"
++	depends on (I2C || SPI_MASTER) && SYSFS
++	select IIO_BUFFER
++	select IIO_KFIFO_BUF
++	select ST_LPS22HH_I2C_IIO if (I2C)
++	select ST_LPS22HH_SPI_IIO if (SPI)
++	help
++	  This driver supports LPS22HH sensors. This driver can be
++	  built as a module. The module will be called st-lps22hh.
++
++config ST_LPS22HH_I2C_IIO
++	tristate
++	depends on ST_LPS22HH_IIO
++
++config ST_LPS22HH_SPI_IIO
++	tristate
++	depends on ST_LPS22HH_IIO
++
+ endmenu
+
+	3) Update the drivers/iio/pressure/Makefile file with the following patch
+
+diff --git a/drivers/iio/pressure/Makefile b/drivers/iio/pressure/Makefile
+--- a/drivers/iio/pressure/Makefile
++++ b/drivers/iio/pressure/Makefile
+@@ -32,3 +32,9 @@ obj-$(CONFIG_ZPA2326_SPI) += zpa2326_spi.o
+
+ obj-$(CONFIG_IIO_ST_PRESS_I2C) += st_pressure_i2c.o
+ obj-$(CONFIG_IIO_ST_PRESS_SPI) += st_pressure_spi.o
++
++obj-$(CONFIG_ST_LPS22HH_IIO) += st_lps22hh.o
++obj-$(CONFIG_ST_LPS22HH_I2C_IIO) += st_lps22hh_i2c.o
++obj-$(CONFIG_ST_LPS22HH_SPI_IIO) += st_lps22hh_spi.o
++
++st_lps22hh-y += st_lps22hh_core.o st_lps22hh_buffer.o
+
+	4) Updated the device tree dts file
+
